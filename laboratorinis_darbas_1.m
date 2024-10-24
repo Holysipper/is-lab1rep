@@ -100,10 +100,7 @@ disp('2 uzduoties pradzia')
 eta = 0.1;
 e = 1;
 while e ~= 0
-    for i = 1:5
-        w1 = w1 + eta * E(i) * P(1, i);
-        w2 = w2 + eta * E(i) * P(2, i);
-        b = b + eta * E(i);
+    for i = 1:5  
         v = P(1,i)*w1 + P(2,i)*w2 + b;
         if v > 0
             y = 1;
@@ -111,8 +108,12 @@ while e ~= 0
             y = -1;
         end
     E(i) = T(i) - y;
+    w1 = w1 + eta * E(i) * P(1, i);
+    w2 = w2 + eta * E(i) * P(2, i);
+    b = b + eta * E(i);
     end
-    e = E(1) + E(2) + E(3) + E(4) + E(5);
+    e = abs(E(1)) + abs(E(2)) + abs(E(3)) + abs(E(4)) + abs(E(5));
+
     fprintf('error rezultatai: %d %d %d %d %d\r\n', E(1), E(2), E(3), E(4), E(5))
 end
 disp('2 uzduoties pabaiga');
@@ -120,12 +121,10 @@ disp('Tikrinamas algoritmas naudojant likusius duomenis')
 x1=[hsv_value_A4 hsv_value_A5 hsv_value_A6 hsv_value_P3 hsv_value_P4];
 x2=[metric_A4 metric_A5 metric_A6 metric_P3 metric_P4];
 T = [1; 1; 1; -1; -1];
-e = 1;
+e = 10;
+P = [x1; x2];
 while e ~= 0
     for i = 1:5
-        w1 = w1 + eta * E(i) * P(1, i);
-        w2 = w2 + eta * E(i) * P(2, i);
-        b = b + eta * E(i);
         v = P(1,i)*w1 + P(2,i)*w2 + b;
         if v > 0
             y = 1;
@@ -133,8 +132,12 @@ while e ~= 0
             y = -1;
         end
     E(i) = T(i) - y;
+    %w1 = w1 + eta * E(i) * P(1, i);
+    %w2 = w2 + eta * E(i) * P(2, i);
+    %b = b + eta * E(i);
     end
-    e = E(1) + E(2) + E(3) + E(4) + E(5);
+    e = abs(E(1)) + abs(E(2)) + abs(E(3)) + abs(E(4)) + abs(E(5));
+    
     fprintf('error rezultatai: %d %d %d %d %d\r\n', E(1), E(2), E(3), E(4), E(5))
 end
 disp('Tikrinimo algoritmas pasibaige, jeigu sita zinute yra matoma, reiskia, algoritmas veikia')
